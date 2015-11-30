@@ -26,10 +26,8 @@
 #include <string>
 #include <memory>
 
-#include "scanner.h"
 #include "message.h"
 #include "payload.h"
-#include "gen/parser.tab.hpp"
 
 namespace wds {
 namespace rtsp {
@@ -42,8 +40,6 @@ class Driver {
   void Parse(const std::string& input, std::unique_ptr<Message>& message /*out*/);
 
  private:
-  std::unique_ptr<Parser> parser_;
-  std::unique_ptr<Scanner> scanner_;
 };
 
 }  // namespace rtsp

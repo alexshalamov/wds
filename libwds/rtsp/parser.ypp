@@ -1,8 +1,5 @@
-%skeleton "lalr1.cc"
-%require  "3.0"
-%define api.namespace {wds::rtsp}
-%define parser_class_name {Parser}
-%start start
+%pure-parser
+%error-verbose
 
 %code requires {
    #include <map>
@@ -13,6 +10,8 @@
    #include "route.h"
    #include "uibcsetting.h"
    #include "uibccapability.h"
+   
+   #define YYLEX_PARAM scanner
    
    namespace wds {
       struct AudioCodec;
@@ -32,8 +31,8 @@
    }
 }
 
-%parse-param { Scanner& scanner  }
-%parse-param { std::unique_ptr<Message>& message  }
+%lex-param {yyscan_t scanner}
+%parse-param {yyscan_t scanner} { std::unique_ptr<Message>& message }
 
 %code {
 /*
@@ -56,8 +55,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA
  */
-
-
 
 #include <iostream>
 #include <cstdlib>
@@ -96,16 +93,11 @@
 #include "presentationurl.h"
 #include "uibccapability.h"
 
-#undef yylex
-#define yylex scanner.yylex
-
 #define UNUSED_TOKEN(T) (void)T
 #define DELETE_TOKEN(T) \
     delete T;           \
     T = nullptr
 }
-
-// FIXME : Use Bison variant.
 
 %union {
    std::string *sval;
@@ -1156,8 +1148,3 @@ wfd_connector_type:
   ;
 
 %%
-
-void wds::rtsp::Parser::error(const std::string &err_message)
-{
-  message = nullptr;
-}

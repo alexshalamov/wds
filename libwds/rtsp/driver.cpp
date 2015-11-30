@@ -27,6 +27,16 @@
 #include <cctype>
 #include <sstream>
 
+// can be merged to 1 lexer
+// %define api.pure full
+// %lex-param {yyscan_t scanner} {parser state}
+// then, in lexer, we can return correct token based on the state
+
+#include "gen/parser.h"
+#include "gen/errorscanner.h"
+#include "gen/headerscanner.h"
+#include "gen/messagescanner.h"
+
 namespace wds {
 namespace rtsp {
 
@@ -34,18 +44,42 @@ Driver::~Driver() {
 }
 
 void Driver::Parse(const std::string& input, std::unique_ptr<Message>& message) {
-  std::istringstream in(input);
-  if (!in.good())
-    return;
 
-  scanner_.reset(new Scanner(&in, message));
-  parser_.reset(new Parser(*scanner_, message));
 
-  // todo: remove, just for testing
-  //scanner_->set_debug(1);
-  //parser_->set_debug_level(1);
+  yyscan_t scanner;
 
-  parser_->parse();
+  // we can remove all these ifs by providing state to lexers
+  // e.g. wfd_lex_init(&scanner);
+  // state = header, error, message
+  // then in .l file we need to add #define YY_EXTRA_TYPE struct _state *
+  //
+  // then code would look like
+  // wfd_lex_init(&scanner);
+  // wfd_lex_set_extra(state, scanner);
+  // in .l file we can check yyextra, if (yyextra == error) return error token.
+  // *_scan_string(...) should be used to set input buffer for lexer
+
+  if (!message) {
+    header_lex_init(&scanner);
+    wfd_parse(scanner, message);
+    header_lex_destroy(scanner);
+  } else if (message->is_reply()) {
+    Reply* reply = static_cast<Reply*>(message.get());
+    if (reply->response_code() == STATUS_SeeOther) {
+      error_lex_init(&scanner);
+      wfd_parse(scanner, message);
+      error_lex_destroy(scanner);
+    } else {
+      message_lex_init(&scanner);
+      wfd_parse(scanner, message);
+      message_lex_destroy(scanner);
+    }
+  }
+
+
+
+
+
 }
 
 } // namespace rtsp
