@@ -204,7 +204,7 @@ static bool test_valid_extra_properties ()
   std::shared_ptr<wds::rtsp::Property> property;
 
   ASSERT_NO_EXCEPTION (property =
-      payload.get_property(wds::rtsp::PropertyType::WFD_AUDIO_CODECS));
+      payload.get_property(wds::rtsp::AudioCodecsPropertyType));
   ASSERT(property->is_none());
 
   ASSERT_NO_EXCEPTION (property =
@@ -242,7 +242,7 @@ static bool test_valid_extra_errors ()
   ASSERT_EQUAL (payload.property_errors().size(), 2);
 
   ASSERT_NO_EXCEPTION(error =
-      payload.get_property_error(wds::rtsp::PropertyType::WFD_AUDIO_CODECS));
+      payload.get_property_error(wds::rtsp::AudioCodecsPropertyType));
   ASSERT_EQUAL(error->error_codes().size(), 1);
   ASSERT_EQUAL(error->error_codes()[0], 103);
 
@@ -278,7 +278,7 @@ static bool test_valid_extra_properties_in_get ()
   driver.Parse(payload_buffer, message);
 
   auto properties = message->payload().get_parameter_properties();
-  ASSERT(property_type_exists (properties, wds::rtsp::PropertyType::WFD_AUDIO_CODECS));
+  ASSERT(property_type_exists (properties, wds::rtsp::AudioCodecsPropertyType));
   ASSERT_EQUAL(properties.size(), 2);
   ASSERT_EQUAL(properties[0], "nonstandard_property");
   ASSERT_EQUAL(properties[1], "wfd_audio_codecs");
@@ -322,17 +322,17 @@ static bool test_valid_get_parameter ()
   ASSERT_EQUAL(message->header().require_wfd_support(), false);
 
   std::vector<std::string> properties = message->payload().get_parameter_properties();
-  ASSERT(property_type_exists (properties, wds::rtsp::PropertyType::WFD_CLIENT_RTP_PORTS));
-  ASSERT(property_type_exists (properties, wds::rtsp::PropertyType::WFD_CLIENT_RTP_PORTS));
-  ASSERT(property_type_exists (properties, wds::rtsp::PropertyType::WFD_AUDIO_CODECS));
-  ASSERT(property_type_exists (properties, wds::rtsp::PropertyType::WFD_VIDEO_FORMATS));
-  ASSERT(property_type_exists (properties, wds::rtsp::PropertyType::WFD_3D_FORMATS));
-  ASSERT(property_type_exists (properties, wds::rtsp::PropertyType::WFD_COUPLED_SINK));
-  ASSERT(property_type_exists (properties, wds::rtsp::PropertyType::WFD_DISPLAY_EDID));
-  ASSERT(property_type_exists (properties, wds::rtsp::PropertyType::WFD_CONNECTOR_TYPE));
-  ASSERT(property_type_exists (properties, wds::rtsp::PropertyType::WFD_UIBC_CAPABILITY));
-  ASSERT(property_type_exists (properties, wds::rtsp::PropertyType::WFD_STANDBY_RESUME_CAPABILITY));
-  ASSERT(property_type_exists (properties, wds::rtsp::PropertyType::WFD_CONTENT_PROTECTION));
+  ASSERT(property_type_exists (properties, wds::rtsp::ClientRTPPortsPropertyType));
+  ASSERT(property_type_exists (properties, wds::rtsp::ClientRTPPortsPropertyType));
+  ASSERT(property_type_exists (properties, wds::rtsp::AudioCodecsPropertyType));
+  ASSERT(property_type_exists (properties, wds::rtsp::VideoFormatsPropertyType));
+  ASSERT(property_type_exists (properties, wds::rtsp::Video3DFormatsPropertyType));
+  ASSERT(property_type_exists (properties, wds::rtsp::CoupledSinkPropertyType));
+  ASSERT(property_type_exists (properties, wds::rtsp::DisplayEdidPropertyType));
+  ASSERT(property_type_exists (properties, wds::rtsp::ConnectorTypePropertyType));
+  ASSERT(property_type_exists (properties, wds::rtsp::UIBCCapabilityPropertyType));
+  ASSERT(property_type_exists (properties, wds::rtsp::StandbyResumeCapabilityPropertyType));
+  ASSERT(property_type_exists (properties, wds::rtsp::ContentProtectionPropertyType));
 
   ASSERT_EQUAL (message->ToString(), header + payload_buffer)
 
@@ -383,68 +383,68 @@ static bool test_valid_get_parameter_reply_with_all_none ()
   std::shared_ptr<wds::rtsp::Property> prop;
 
   ASSERT_NO_EXCEPTION (prop =
-      payload.get_property(wds::rtsp::PropertyType::WFD_AUDIO_CODECS));
+      payload.get_property(wds::rtsp::AudioCodecsPropertyType));
   ASSERT(prop->is_none());
   ASSERT_NO_EXCEPTION (prop =
-      payload.get_property(wds::rtsp::PropertyType::WFD_VIDEO_FORMATS));
+      payload.get_property(wds::rtsp::VideoFormatsPropertyType));
   ASSERT(prop->is_none());
   ASSERT_NO_EXCEPTION (prop =
-      payload.get_property(wds::rtsp::PropertyType::WFD_3D_FORMATS));
+      payload.get_property(wds::rtsp::Video3DFormatsPropertyType));
   ASSERT(prop->is_none());
   ASSERT_NO_EXCEPTION (prop =
-      payload.get_property(wds::rtsp::PropertyType::WFD_CONTENT_PROTECTION));
+      payload.get_property(wds::rtsp::ContentProtectionPropertyType));
   ASSERT(prop->is_none());
   ASSERT_NO_EXCEPTION (prop =
-      payload.get_property(wds::rtsp::PropertyType::WFD_DISPLAY_EDID));
+      payload.get_property(wds::rtsp::DisplayEdidPropertyType));
   ASSERT(prop->is_none());
   ASSERT_NO_EXCEPTION (prop =
-      payload.get_property(wds::rtsp::PropertyType::WFD_COUPLED_SINK));
+      payload.get_property(wds::rtsp::CoupledSinkPropertyType));
   ASSERT(prop->is_none());
   ASSERT_NO_EXCEPTION (prop =
-      payload.get_property(wds::rtsp::PropertyType::WFD_UIBC_CAPABILITY));
+      payload.get_property(wds::rtsp::UIBCCapabilityPropertyType));
   ASSERT(prop->is_none());
   ASSERT_NO_EXCEPTION (prop =
-      payload.get_property(wds::rtsp::PropertyType::WFD_CONNECTOR_TYPE));
+      payload.get_property(wds::rtsp::ConnectorTypePropertyType));
   ASSERT(prop->is_none());
   ASSERT_NO_EXCEPTION (prop =
-      payload.get_property(wds::rtsp::PropertyType::WFD_STANDBY_RESUME_CAPABILITY));
+      payload.get_property(wds::rtsp::StandbyResumeCapabilityPropertyType));
   ASSERT(prop->is_none());
 
   ASSERT_NO_EXCEPTION (prop =
-      payload.get_property(wds::rtsp::PropertyType::WFD_AV_FORMAT_CHANGE_TIMING));
+      payload.get_property(wds::rtsp::AVFormatChangeTimingPropertyType));
   auto av_format_change_timing = std::static_pointer_cast<wds::rtsp::AVFormatChangeTiming> (prop);
   ASSERT_EQUAL(av_format_change_timing->pts(), 0x000000000F);
   ASSERT_EQUAL(av_format_change_timing->dts(), 0x00000000FF);
 
   ASSERT_NO_EXCEPTION (prop =
-      payload.get_property(wds::rtsp::PropertyType::WFD_CLIENT_RTP_PORTS));
+      payload.get_property(wds::rtsp::ClientRTPPortsPropertyType));
   auto client_rtp_ports = std::static_pointer_cast<wds::rtsp::ClientRtpPorts> (prop);
   ASSERT_EQUAL(client_rtp_ports->rtp_port_0(), 19000);
   ASSERT_EQUAL(client_rtp_ports->rtp_port_1(), 0);
 
   ASSERT_NO_EXCEPTION (prop =
-      payload.get_property(wds::rtsp::PropertyType::WFD_TRIGGER_METHOD));
+      payload.get_property(wds::rtsp::TriggerMethodPropertyType));
   auto trigger_method = std::static_pointer_cast<wds::rtsp::TriggerMethod> (prop);
   ASSERT_EQUAL(trigger_method->method(), wds::rtsp::TriggerMethod::TEARDOWN);
 
   ASSERT_NO_EXCEPTION (prop =
-      payload.get_property(wds::rtsp::PropertyType::WFD_PRESENTATION_URL));
+      payload.get_property(wds::rtsp::PresentationURLPropertyType));
   auto presentation_url = std::static_pointer_cast<wds::rtsp::PresentationUrl> (prop);
   ASSERT_EQUAL(presentation_url->presentation_url_1(), "");
   ASSERT_EQUAL(presentation_url->presentation_url_2(), "");
 
   ASSERT_NO_EXCEPTION (prop =
-      payload.get_property(wds::rtsp::PropertyType::WFD_ROUTE));
+      payload.get_property(wds::rtsp::RoutePropertyType));
   auto route = std::static_pointer_cast<wds::rtsp::Route> (prop);
   ASSERT_EQUAL(route->destination(), wds::rtsp::Route::PRIMARY);
 
   ASSERT_NO_EXCEPTION (prop =
-      payload.get_property(wds::rtsp::PropertyType::WFD_I2C));
+      payload.get_property(wds::rtsp::I2CPropertyType));
   auto i2c = std::static_pointer_cast<wds::rtsp::I2C> (prop);
   ASSERT_EQUAL(i2c->is_supported(), false);
 
   ASSERT_NO_EXCEPTION (prop =
-      payload.get_property(wds::rtsp::PropertyType::WFD_UIBC_SETTING));
+      payload.get_property(wds::rtsp::UIBCSettingPropertyType));
   auto uibc_setting = std::static_pointer_cast<wds::rtsp::UIBCSetting> (prop);
   ASSERT_EQUAL(uibc_setting->is_enabled(), false);
 
@@ -490,11 +490,11 @@ static bool test_valid_get_parameter_reply ()
   std::shared_ptr<wds::rtsp::Property> prop;
 
   ASSERT_NO_EXCEPTION (prop =
-      payload.get_property(wds::rtsp::PropertyType::WFD_AUDIO_CODECS));
+      payload.get_property(wds::rtsp::AudioCodecsPropertyType));
 
   // Test that all properties exist
   ASSERT_NO_EXCEPTION (prop =
-      payload.get_property(wds::rtsp::PropertyType::WFD_AUDIO_CODECS));
+      payload.get_property(wds::rtsp::AudioCodecsPropertyType));
   std::shared_ptr<wds::rtsp::AudioCodecs> audio_codecs = std::static_pointer_cast<wds::rtsp::AudioCodecs> (prop);
   ASSERT_EQUAL(audio_codecs->audio_codecs().size(), 2);
   ASSERT(test_audio_codec (audio_codecs->audio_codecs()[0],
@@ -502,14 +502,14 @@ static bool test_valid_get_parameter_reply ()
   ASSERT(test_audio_codec (audio_codecs->audio_codecs()[1],
                            wds::AAC, 1, 0));
   ASSERT_NO_EXCEPTION (prop =
-      payload.get_property(wds::rtsp::PropertyType::WFD_VIDEO_FORMATS));
+      payload.get_property(wds::rtsp::VideoFormatsPropertyType));
   std::shared_ptr<wds::rtsp::VideoFormats> video_formats = std::static_pointer_cast<wds::rtsp::VideoFormats> (prop);
   ASSERT_EQUAL(video_formats->GetNativeFormat().rate_resolution, 8);
   ASSERT_EQUAL(video_formats->GetNativeFormat().type, 0);
   ASSERT_EQUAL(video_formats->GetH264Formats().size(), 96);
 
   ASSERT_NO_EXCEPTION (prop =
-      payload.get_property(wds::rtsp::PropertyType::WFD_3D_FORMATS));
+      payload.get_property(wds::rtsp::Video3DFormatsPropertyType));
   std::shared_ptr<wds::rtsp::Formats3d> formats_3d = std::static_pointer_cast<wds::rtsp::Formats3d> (prop);
 
   ASSERT_EQUAL(formats_3d->native_resolution(), 0x80);
@@ -519,42 +519,42 @@ static bool test_valid_get_parameter_reply ()
                              0x03, 0x0F, 0x0000000000000005, 0, 0x0001, 0x1401, 0x13, 0, 0));
 
   ASSERT_NO_EXCEPTION (prop =
-      payload.get_property(wds::rtsp::PropertyType::WFD_CONTENT_PROTECTION));
+      payload.get_property(wds::rtsp::ContentProtectionPropertyType));
   std::shared_ptr<wds::rtsp::ContentProtection> content_protection = std::static_pointer_cast<wds::rtsp::ContentProtection> (prop);
   ASSERT_EQUAL(content_protection->hdcp_spec(), wds::rtsp::ContentProtection::HDCP_SPEC_2_1);
   ASSERT_EQUAL(content_protection->port(), 1189);
 
   ASSERT_NO_EXCEPTION (prop =
-      payload.get_property(wds::rtsp::PropertyType::WFD_DISPLAY_EDID));
+      payload.get_property(wds::rtsp::DisplayEdidPropertyType));
   ASSERT(prop->is_none());
 
   ASSERT_NO_EXCEPTION (prop =
-      payload.get_property(wds::rtsp::PropertyType::WFD_COUPLED_SINK));
+      payload.get_property(wds::rtsp::CoupledSinkPropertyType));
   ASSERT(prop->is_none());
 
   ASSERT_NO_EXCEPTION (prop =
-      payload.get_property(wds::rtsp::PropertyType::WFD_CLIENT_RTP_PORTS));
+      payload.get_property(wds::rtsp::ClientRTPPortsPropertyType));
   std::shared_ptr<wds::rtsp::ClientRtpPorts> client_rtp_ports = std::static_pointer_cast<wds::rtsp::ClientRtpPorts> (prop);
   ASSERT_EQUAL(client_rtp_ports->rtp_port_0(), 19000);
   ASSERT_EQUAL(client_rtp_ports->rtp_port_1(), 0);
 
   ASSERT_NO_EXCEPTION (prop =
-      payload.get_property(wds::rtsp::PropertyType::WFD_UIBC_CAPABILITY));
+      payload.get_property(wds::rtsp::UIBCCapabilityPropertyType));
   ASSERT(prop->is_none());
 
   ASSERT_NO_EXCEPTION (prop =
-      payload.get_property(wds::rtsp::PropertyType::WFD_CONNECTOR_TYPE));
+      payload.get_property(wds::rtsp::ConnectorTypePropertyType));
   std::shared_ptr<wds::rtsp::ConnectorType> connector_type = std::static_pointer_cast<wds::rtsp::ConnectorType> (prop);
   ASSERT_EQUAL(connector_type->connector_type(), 5);
 
   ASSERT_NO_EXCEPTION (prop =
-      payload.get_property(wds::rtsp::PropertyType::WFD_I2C));
+      payload.get_property(wds::rtsp::I2CPropertyType));
   auto i2c = std::static_pointer_cast<wds::rtsp::I2C> (prop);
   ASSERT_EQUAL(i2c->is_supported(), true);
   ASSERT_EQUAL(i2c->port(), 404);
 
   ASSERT_NO_EXCEPTION (prop =
-      payload.get_property(wds::rtsp::PropertyType::WFD_STANDBY_RESUME_CAPABILITY));
+      payload.get_property(wds::rtsp::StandbyResumeCapabilityPropertyType));
   ASSERT(!prop->is_none());
 
   ASSERT_EQUAL(message->ToString(), header + payload_buffer);
@@ -613,7 +613,7 @@ static bool test_case_insensitivity ()
   std::shared_ptr<wds::rtsp::Property> prop;
 
   ASSERT_NO_EXCEPTION (prop =
-      payload.get_property(wds::rtsp::PropertyType::WFD_UIBC_CAPABILITY));
+      payload.get_property(wds::rtsp::UIBCCapabilityPropertyType));
   ASSERT(prop->is_none());
 
   // TODO test insensitivity of triggers and method list
@@ -646,13 +646,13 @@ static bool test_valid_get_parameter_reply_with_errors ()
   std::shared_ptr<wds::rtsp::PropertyErrors> error;
   ASSERT_EQUAL (payload.property_errors().size(), 2);
   ASSERT_NO_EXCEPTION(error =
-      payload.get_property_error(wds::rtsp::PropertyType::WFD_AUDIO_CODECS));
+      payload.get_property_error(wds::rtsp::AudioCodecsPropertyType));
   ASSERT_EQUAL(error->error_codes().size(), 2);
   ASSERT_EQUAL(error->error_codes()[0], 415);
   ASSERT_EQUAL(error->error_codes()[1], 457);
 
   ASSERT_NO_EXCEPTION(error =
-      payload.get_property_error(wds::rtsp::PropertyType::WFD_I2C));
+      payload.get_property_error(wds::rtsp::I2CPropertyType));
   ASSERT_EQUAL(error->error_codes().size(), 1);
   ASSERT_EQUAL(error->error_codes()[0], 404);
 
@@ -692,32 +692,32 @@ static bool test_valid_set_parameter ()
   std::shared_ptr<wds::rtsp::Property> prop;
 
   ASSERT_NO_EXCEPTION (prop =
-      payload.get_property(wds::rtsp::PropertyType::WFD_AUDIO_CODECS));
+      payload.get_property(wds::rtsp::AudioCodecsPropertyType));
   std::shared_ptr<wds::rtsp::AudioCodecs> audio_codecs = std::static_pointer_cast<wds::rtsp::AudioCodecs> (prop);
   ASSERT_EQUAL(audio_codecs->audio_codecs().size(), 1);
   ASSERT(test_audio_codec (audio_codecs->audio_codecs()[0],
                            wds::AAC, 1, 0));
 
   ASSERT_NO_EXCEPTION (prop =
-      payload.get_property(wds::rtsp::PropertyType::WFD_VIDEO_FORMATS));
+      payload.get_property(wds::rtsp::VideoFormatsPropertyType));
   std::shared_ptr<wds::rtsp::VideoFormats> video_formats = std::static_pointer_cast<wds::rtsp::VideoFormats> (prop);
   ASSERT_EQUAL(video_formats->GetNativeFormat().rate_resolution, 11);
   ASSERT_EQUAL(video_formats->GetNativeFormat().type, 2);
   ASSERT_EQUAL(video_formats->GetH264Formats().size(), 1);
 
   ASSERT_NO_EXCEPTION (prop =
-      payload.get_property(wds::rtsp::PropertyType::WFD_CLIENT_RTP_PORTS));
+      payload.get_property(wds::rtsp::ClientRTPPortsPropertyType));
   std::shared_ptr<wds::rtsp::ClientRtpPorts> client_rtp_ports = std::static_pointer_cast<wds::rtsp::ClientRtpPorts> (prop);
   ASSERT_EQUAL(client_rtp_ports->rtp_port_0(), 19000);
   ASSERT_EQUAL(client_rtp_ports->rtp_port_1(), 0);
 
   ASSERT_NO_EXCEPTION (prop =
-      payload.get_property(wds::rtsp::PropertyType::WFD_TRIGGER_METHOD));
+      payload.get_property(wds::rtsp::TriggerMethodPropertyType));
   std::shared_ptr<wds::rtsp::TriggerMethod> trigger_method = std::static_pointer_cast<wds::rtsp::TriggerMethod> (prop);
   ASSERT_EQUAL(trigger_method->method(), wds::rtsp::TriggerMethod::SETUP);
 
   ASSERT_NO_EXCEPTION (prop =
-      payload.get_property(wds::rtsp::PropertyType::WFD_PRESENTATION_URL));
+      payload.get_property(wds::rtsp::PresentationURLPropertyType));
 
   ASSERT_EQUAL(request->ToString(), header + payload_buffer);
 
