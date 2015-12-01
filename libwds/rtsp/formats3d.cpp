@@ -33,7 +33,7 @@ Formats3d::Formats3d() : Property(Video3DFormatsPropertyType, true) {
 Formats3d::Formats3d(unsigned char native,
     unsigned char preferred_display_mode,
     const H264Codecs3d& h264_codecs_3d)
-  : Property(WFD_3D_FORMATS),
+  : Property(Video3DFormatsPropertyType),
     native_(native),
     preferred_display_mode_(preferred_display_mode),
     h264_codecs_3d_(h264_codecs_3d) {
