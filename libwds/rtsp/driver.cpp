@@ -33,7 +33,7 @@
 
 int wds_lex(YYSTYPE* yylval, void* scanner, std::unique_ptr<wds::rtsp::Message>& message) {
   if (!message) {
-    header_lex(yylval, scanner);
+    return header_lex(yylval, scanner);
   } else if (message->is_reply()) {
     wds::rtsp::Reply* reply = static_cast<wds::rtsp::Reply*>(message.get());
     if (reply->response_code() == wds::rtsp::STATUS_SeeOther)
