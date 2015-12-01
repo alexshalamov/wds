@@ -33,26 +33,26 @@ const char CRLF[] = "\r\n";
 const char RTSP_END[] = "RTSP/1.0";
 
 enum PropertyType {
-  WFD_AUDIO_CODECS,
-  WFD_VIDEO_FORMATS,
-  WFD_3D_FORMATS,
-  WFD_CONTENT_PROTECTION,
-  WFD_DISPLAY_EDID,
-  WFD_COUPLED_SINK,
-  WFD_TRIGGER_METHOD,
-  WFD_PRESENTATION_URL,
-  WFD_CLIENT_RTP_PORTS,
-  WFD_ROUTE,
-  WFD_I2C,
-  WFD_AV_FORMAT_CHANGE_TIMING,
-  WFD_PREFERRED_DISPLAY_MODE,
-  WFD_UIBC_CAPABILITY,
-  WFD_UIBC_SETTING,
-  WFD_STANDBY_RESUME_CAPABILITY,
-  WFD_STANDBY,
-  WFD_CONNECTOR_TYPE,
-  WFD_IDR_REQUEST,
-  WFD_GENERIC
+  AudioCodecsProperty,
+  VideoFormatsProperty,
+  Video3DFormatsProperty,
+  ContentProtectionProperty,
+  DisplayEdidProperty,
+  CoupledSinkProperty,
+  TriggerMethodProperty,
+  PresentationURLProperty,
+  ClientRTPPortsProperty,
+  RouteProperty,
+  I2CProperty,
+  AVFormatChangeTimingProperty,
+  PreferredDisplayModeProperty,
+  UIBCCapabilityProperty,
+  UIBCSettingPropoerty,
+  StandbyResumeCapabilityProperty,
+  StandbyProperty,
+  ConnectorTypeProperty,
+  IDRRequestProperty,
+  GenericProperty
 };
 
 namespace PropertyName {
