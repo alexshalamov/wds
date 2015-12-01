@@ -10,14 +10,14 @@ file(MAKE_DIRECTORY ${PARSER_GEN_DIR})
 include_directories ("${PROJECT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}" "${PARSER_GEN_DIR}" "${CMAKE_CURRENT_BINARY_DIR}")
 
 find_package(BISON REQUIRED)
-BISON_TARGET(Parser parser.ypp ${PARSER_GEN_DIR}/parser.cpp COMPILE_FLAGS "-l -v -p wfd_ --defines=${PARSER_GEN_DIR}/parser.h")
+BISON_TARGET(Parser parser.ypp ${PARSER_GEN_DIR}/parser.cpp COMPILE_FLAGS "-l -p wfd_")
 
 find_package(FLEX REQUIRED)
-FLEX_TARGET(MessageLexer messagelexer.l ${PARSER_GEN_DIR}/messagescanner.cpp COMPILE_FLAGS "-L -P message_ --header-file=${PARSER_GEN_DIR}/messagescanner.h")
+FLEX_TARGET(MessageLexer messagelexer.l ${PARSER_GEN_DIR}/messagescanner.cpp COMPILE_FLAGS "-L -P message_")
 ADD_FLEX_BISON_DEPENDENCY(MessageLexer Parser)
-FLEX_TARGET(HeaderLexer headerlexer.l ${PARSER_GEN_DIR}/headerscanner.cpp COMPILE_FLAGS "-L -P header_ --header-file=${PARSER_GEN_DIR}/headerscanner.h")
+FLEX_TARGET(HeaderLexer headerlexer.l ${PARSER_GEN_DIR}/headerscanner.cpp COMPILE_FLAGS "-L -P header_")
 ADD_FLEX_BISON_DEPENDENCY(HeaderLexer Parser)
-FLEX_TARGET(ErrorLexer errorlexer.l ${PARSER_GEN_DIR}/errorscanner.cpp COMPILE_FLAGS "-L -P error_ --header-file=${PARSER_GEN_DIR}/errorscanner.h")
+FLEX_TARGET(ErrorLexer errorlexer.l ${PARSER_GEN_DIR}/errorscanner.cpp COMPILE_FLAGS "-L -P error_")
 ADD_FLEX_BISON_DEPENDENCY(ErrorLexer Parser)
 
 add_library(wdsrtsp OBJECT

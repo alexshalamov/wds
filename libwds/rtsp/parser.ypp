@@ -1,5 +1,8 @@
 %pure-parser
 %error-verbose
+%no-lines
+%output "gen/parser.cpp"
+%defines "gen/parser.h"
 
 %code requires {
    #include <map>

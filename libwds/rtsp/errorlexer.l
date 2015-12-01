@@ -3,6 +3,7 @@
 %option never-interactive
 %option warn stack noyy_top_state
 %option case-insensitive
+%option outfile="gen/errorscanner.cpp" header-file="gen/errorscanner.h"
 
 %{
 /*
