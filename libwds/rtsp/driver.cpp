@@ -46,7 +46,7 @@ Driver::~Driver() {
 void Driver::Parse(const std::string& input, std::unique_ptr<Message>& message) {
 
 
-  yyscan_t scanner;
+  void* scanner;
 
   // we can remove all these ifs by providing state to lexers
   // e.g. wfd_lex_init(&scanner);
