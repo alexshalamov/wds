@@ -27,22 +27,27 @@
 #include <cctype>
 #include <sstream>
 
-// can be merged to 1 lexer
-// %define api.pure full
-// %lex-param {yyscan_t scanner} {parser state}
-// then, in lexer, we can return correct token based on the state
-
 #include "gen/parser.h"
+#include "gen/messagescanner.h"
 #include "gen/errorscanner.h"
 #include "gen/headerscanner.h"
-#include "gen/messagescanner.h"
 
 
 int wfd_lex(YYSTYPE* yylval, void* scanner, std::unique_ptr<wds::rtsp::Message>& message) {
+  if (!message) {
+    header_lex(yylval, scanner);
+  } else if (message->is_reply()) {
+    wds::rtsp::Reply* reply = static_cast<wds::rtsp::Reply*>(message.get());
+    if (reply->response_code() == wds::rtsp::STATUS_SeeOther)
+      return  error_lex(yylval, scanner);
+    else
+      return  message_lex(yylval, scanner);
+  }
+
   return 0;
 }
 
-void wfd_error (void* scanner, std::unique_ptr<wds::rtsp::Message>& message, const char* error_message) {
+void wds_error (void* scanner, std::unique_ptr<wds::rtsp::Message>& message, const char* error_message) {
 }
 
 namespace wds {
@@ -51,12 +56,7 @@ namespace rtsp {
 Driver::~Driver() {
 }
 
-
 void Driver::Parse(const std::string& input, std::unique_ptr<Message>& message) {
-
-
-  void* scanner;
-
   // we can remove all these ifs by providing state to lexers
   // e.g. wfd_lex_init(&scanner);
   // state = header, error, message
@@ -68,28 +68,29 @@ void Driver::Parse(const std::string& input, std::unique_ptr<Message>& message) 
   // in .l file we can check yyextra, if (yyextra == error) return error token.
   // *_scan_string(...) should be used to set input buffer for lexer
 
+
+  void* scanner;
+
   if (!message) {
     header_lex_init(&scanner);
-    wfd_parse(scanner, message);
+    header__scan_string(input.c_str(), scanner);
+    wds_parse(scanner, message);
     header_lex_destroy(scanner);
   } else if (message->is_reply()) {
     Reply* reply = static_cast<Reply*>(message.get());
     if (reply->response_code() == STATUS_SeeOther) {
       error_lex_init(&scanner);
-      wfd_parse(scanner, message);
+      error__scan_string(input.c_str(), scanner);
+      wds_parse(scanner, message);
       error_lex_destroy(scanner);
     } else {
       message_lex_init(&scanner);
-      //void message_set_extra (is_reply ,scanner );
-      wfd_parse(scanner, message);
+      message_set_extra (message->is_reply(), scanner);
+      message__scan_string(input.c_str(), scanner);
+      wds_parse(scanner, message);
       message_lex_destroy(scanner);
     }
   }
-
-
-
-
-
 }
 
 } // namespace rtsp

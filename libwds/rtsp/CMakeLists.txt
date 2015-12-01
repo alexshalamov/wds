@@ -10,7 +10,7 @@ file(MAKE_DIRECTORY ${PARSER_GEN_DIR})
 include_directories ("${PROJECT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}" "${PARSER_GEN_DIR}" "${CMAKE_CURRENT_BINARY_DIR}")
 
 find_package(BISON REQUIRED)
-BISON_TARGET(Parser parser.ypp ${PARSER_GEN_DIR}/parser.cpp COMPILE_FLAGS "-l -p wfd_")
+BISON_TARGET(Parser parser.ypp ${PARSER_GEN_DIR}/parser.cpp COMPILE_FLAGS "-l -p wds_")
 
 find_package(FLEX REQUIRED)
 FLEX_TARGET(MessageLexer messagelexer.l ${PARSER_GEN_DIR}/messagescanner.cpp COMPILE_FLAGS "-L -P message_")

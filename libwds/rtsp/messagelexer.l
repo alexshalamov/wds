@@ -3,6 +3,7 @@
 %option never-interactive
 %option warn stack noyy_top_state noyy_pop_state noyy_push_state
 %option case-insensitive
+%option extra-type="bool"
 %option outfile="gen/messagescanner.cpp" header-file="gen/messagescanner.h"
 
 %{
@@ -30,7 +31,6 @@
 #include <string>
 #include "parser.h"
 #define yyterminate() return(END)
-#define YY_EXTRA_TYPE bool
 %}
 
 %x MATCH_STRING_STATE
