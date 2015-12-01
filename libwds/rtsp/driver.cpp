@@ -39,7 +39,6 @@
 
 
 int wfd_lex(YYSTYPE* yylval, void* scanner, std::unique_ptr<wds::rtsp::Message>& message) {
-  //void message_set_extra (is_reply ,scanner );
   return 0;
 }
 
@@ -81,6 +80,7 @@ void Driver::Parse(const std::string& input, std::unique_ptr<Message>& message) 
       error_lex_destroy(scanner);
     } else {
       message_lex_init(&scanner);
+      //void message_set_extra (is_reply ,scanner );
       wfd_parse(scanner, message);
       message_lex_destroy(scanner);
     }
