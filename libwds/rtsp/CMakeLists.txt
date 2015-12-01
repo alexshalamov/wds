@@ -19,9 +19,9 @@ FLEX_TARGET(HeaderLexer headerlexer.l ${PARSER_GEN_DIR}/headerscanner.c COMPILE_
 ADD_FLEX_BISON_DEPENDENCY(HeaderLexer Parser)
 FLEX_TARGET(ErrorLexer errorlexer.l ${PARSER_GEN_DIR}/errorscanner.c COMPILE_FLAGS "-L -P error_ --header-file=${PARSER_GEN_DIR}/errorscanner.h")
 ADD_FLEX_BISON_DEPENDENCY(ErrorLexer Parser)
- 
+
 add_library(wdsrtsp OBJECT
-    ${BISON_Parser_OUTPUTS}
+    ${BISON_Parser_OUTPUT_SOURCE}
     ${FLEX_MessageLexer_OUTPUTS}
     ${FLEX_ErrorLexer_OUTPUTS}
     ${FLEX_HeaderLexer_OUTPUTS}
@@ -36,8 +36,8 @@ add_library(wdsrtsp OBJECT
     preferreddisplaymode.cpp uibccapability.cpp propertyerrors.cpp
 )
 
-# add_executable(test-wds tests.cpp $<TARGET_OBJECTS:wdsrtsp> $<TARGET_OBJECTS:wdscommon>)
+add_executable(test-wds tests.cpp $<TARGET_OBJECTS:wdsrtsp> $<TARGET_OBJECTS:wdscommon>)
 set(LINK_FLAGS ${LINK_FLAGS} "-Wl,-whole-archive")
-# target_link_libraries (test-wds)
+target_link_libraries (test-wds)
 
-# add_test(WfdTest test-wds)
+add_test(WfdTest test-wds)
