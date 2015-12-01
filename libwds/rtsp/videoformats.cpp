@@ -192,7 +192,7 @@ H264VideoCodec H264Codec::ToH264VideoCodec() const {
   return result;
 }
 
-VideoFormats::VideoFormats() : Property(WFD_VIDEO_FORMATS, true) {
+VideoFormats::VideoFormats() : Property(VideoFormatsPropertyType, true) {
 }
 
 VideoFormats::VideoFormats(NativeVideoFormat format,
@@ -218,7 +218,7 @@ VideoFormats::VideoFormats(NativeVideoFormat format,
 VideoFormats::VideoFormats(unsigned char native,
     unsigned char preferred_display_mode,
     const H264Codecs& h264_codecs)
-  : Property(WFD_VIDEO_FORMATS),
+  : Property(VideoFormatsPropertyType),
     native_(native),
     preferred_display_mode_(preferred_display_mode),
     h264_codecs_(h264_codecs) {

@@ -33,26 +33,26 @@ const char CRLF[] = "\r\n";
 const char RTSP_END[] = "RTSP/1.0";
 
 enum PropertyType {
-  AudioCodecsProperty,
-  VideoFormatsProperty,
-  Video3DFormatsProperty,
-  ContentProtectionProperty,
-  DisplayEdidProperty,
-  CoupledSinkProperty,
-  TriggerMethodProperty,
-  PresentationURLProperty,
-  ClientRTPPortsProperty,
-  RouteProperty,
-  I2CProperty,
-  AVFormatChangeTimingProperty,
-  PreferredDisplayModeProperty,
-  UIBCCapabilityProperty,
-  UIBCSettingPropoerty,
-  StandbyResumeCapabilityProperty,
-  StandbyProperty,
-  ConnectorTypeProperty,
-  IDRRequestProperty,
-  GenericProperty
+  AudioCodecsPropertyType,
+  VideoFormatsPropertyType,
+  Video3DFormatsPropertyType,
+  ContentProtectionPropertyType,
+  DisplayEdidPropertyType,
+  CoupledSinkPropertyType,
+  TriggerMethodPropertyType,
+  PresentationURLPropertyType,
+  ClientRTPPortsPropertyType,
+  RoutePropertyType,
+  I2CPropertyType,
+  AVFormatChangeTimingPropertyType,
+  PreferredDisplayModePropertyType,
+  UIBCCapabilityPropertyType,
+  UIBCSettingPropertyType,
+  StandbyResumeCapabilityPropertyType,
+  StandbyPropertyType,
+  ConnectorTypePropertyType,
+  IDRRequestPropertyType,
+  GenericPropertyType
 };
 
 namespace PropertyName {

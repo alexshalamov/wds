@@ -27,7 +27,7 @@
 namespace wds {
 namespace rtsp {
 
-GenericProperty::GenericProperty() : Property(WFD_GENERIC) {
+GenericProperty::GenericProperty() : Property(GenericPropertyType) {
 }
 
 GenericProperty::GenericProperty(const std::string& key, const std::string& value)

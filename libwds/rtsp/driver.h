@@ -29,6 +29,7 @@
 #include "message.h"
 #include "payload.h"
 
+#include "gen/parser.h"
 
 int wfd_lex(YYSTYPE* yylval, void* scanner, std::unique_ptr<wds::rtsp::Message>& message);
 

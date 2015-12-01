@@ -27,7 +27,7 @@
 namespace wds {
 namespace rtsp {
 
-Formats3d::Formats3d() : Property(WFD_3D_FORMATS, true) {
+Formats3d::Formats3d() : Property(Video3DFormatsPropertyType, true) {
 }
 
 Formats3d::Formats3d(unsigned char native,
