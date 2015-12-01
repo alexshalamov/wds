@@ -33,7 +33,7 @@
 #include "gen/headerscanner.h"
 
 
-int wfd_lex(YYSTYPE* yylval, void* scanner, std::unique_ptr<wds::rtsp::Message>& message) {
+int wds_lex(YYSTYPE* yylval, void* scanner, std::unique_ptr<wds::rtsp::Message>& message) {
   if (!message) {
     header_lex(yylval, scanner);
   } else if (message->is_reply()) {
