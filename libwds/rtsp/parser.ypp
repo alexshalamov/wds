@@ -32,7 +32,7 @@
 }
 
 %lex-param {yyscan_t scanner}
-%parse-param {yyscan_t scanner} { std::unique_ptr<Message>& message }
+%parse-param {yyscan_t scanner} { std::unique_ptr<wds::rtsp::Message>& message }
 
 %code {
 /*
@@ -100,41 +100,41 @@
 }
 
 %union {
-   std::string *sval;
+   std::string* sval;
    unsigned long long int nval;
    bool bool_val;
    std::vector<std::string>* vsval;
-   Message* message;
-   Header* header;
-   Payload* mpayload;
-   AudioFormats audio_format;
-   Property* property;
+   wds::rtsp::Message* message;
+   wds::rtsp::Header* header;
+   wds::rtsp::Payload* mpayload;
+   wds::AudioFormats audio_format;
+   wds::rtsp::Property* property;
    std::vector<unsigned short>* error_list;
-   PropertyErrors* property_errors;
-   std::map<PropertyType, std::shared_ptr<PropertyErrors>>* property_error_map;
-   std::vector<H264Codec>* codecs;
-   H264Codec* codec;
-   std::vector<H264Codec3d>* codecs_3d;
-   H264Codec3d* codec_3d;
-   ContentProtection::HDCPSpec hdcp_spec;
-   TriggerMethod::Method trigger_method;
-   Route::Destination route_destination;
+   wds::rtsp::PropertyErrors* property_errors;
+   std::map<wds::rtsp::PropertyType, std::shared_ptr<wds::rtsp::PropertyErrors>>* property_error_map;
+   std::vector<wds::rtsp::H264Codec>* codecs;
+   wds::rtsp::H264Codec* codec;
+   std::vector<wds::rtsp::H264Codec3d>* codecs_3d;
+   wds::rtsp::H264Codec3d* codec_3d;
+   wds::rtsp::ContentProtection::HDCPSpec hdcp_spec;
+   wds::rtsp::TriggerMethod::Method trigger_method;
+   wds::rtsp::Route::Destination route_destination;
    bool uibc_setting;
-   std::vector<UIBCCapability::InputCategory>* input_category_list;
-   std::vector<UIBCCapability::InputType>* generic_cap_list;
-   std::vector<UIBCCapability::DetailedCapability>* hidc_cap_list;
-   UIBCCapability::InputCategory input_category_list_value;
-   UIBCCapability::InputType generic_cap_list_value;
-   UIBCCapability::DetailedCapability* hidc_cap_list_value;
-   UIBCCapability::InputPath input_path;
-   Method method;
-   std::vector<Method>* methods;
-   PropertyType parameter;
-   std::vector<PropertyType>* parameters;
-   std::vector<AudioCodec>* audio_codecs;
-   AudioCodec* audio_codec;
+   std::vector<wds::rtsp::UIBCCapability::InputCategory>* input_category_list;
+   std::vector<wds::rtsp::UIBCCapability::InputType>* generic_cap_list;
+   std::vector<wds::rtsp::UIBCCapability::DetailedCapability>* hidc_cap_list;
+   wds::rtsp::UIBCCapability::InputCategory input_category_list_value;
+   wds::rtsp::UIBCCapability::InputType generic_cap_list_value;
+   wds::rtsp::UIBCCapability::DetailedCapability* hidc_cap_list_value;
+   wds::rtsp::UIBCCapability::InputPath input_path;
+   wds::rtsp::Method method;
+   std::vector<wds::rtsp::Method>* methods;
+   wds::rtsp::PropertyType parameter;
+   std::vector<wds::rtsp::PropertyType>* parameters;
+   std::vector<wds::AudioCodec>* audio_codecs;
+   wds::AudioCodec* audio_codec;
    std::pair<std::string, unsigned int>* session_info;
-   TransportHeader* transport;
+   wds::rtsp::TransportHeader* transport;
 }
 
 %token END 0
