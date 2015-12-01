@@ -31,6 +31,7 @@
 #include <string>
 #include "parser.h"
 #define yyterminate() return(END)
+#define YY_EXTRA_TYPE bool
 %}
 
 %x MATCH_STRING_STATE
@@ -208,7 +209,7 @@ ERROR ({DIGIT}){3}
   }
 
 ^"wfd_standby" {
-    if (is_reply_message_)
+    if (yyextra)
       return WFD_STANDBY_IN_RESPONSE;
     return WFD_STANDBY_IN_REQUEST;
   }
