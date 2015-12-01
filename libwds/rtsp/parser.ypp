@@ -567,24 +567,24 @@ wfd_parameter_list:
   ;
 
 wfd_parameter:
-    WFD_AUDIO_CODECS { $$ = wds::rtsp::AudioCodecsProperty; }
-  | WFD_VIDEO_FORMATS { $$ = wds::rtsp::VideoFormatsProperty; }
-  | WFD_3D_FORMATS { $$ = wds::rtsp::Video3DFormatsProperty; }
-  | WFD_CONTENT_PROTECTION { $$ = wds::rtsp::ContentProtectionProperty; }
-  | WFD_DISPLAY_EDID { $$ = wds::rtsp::DisplayEdidProperty; }
-  | WFD_COUPLED_SINK { $$ = wds::rtsp::CoupledSinkProperty; }
-  | WFD_TRIGGER_METHOD { $$ = wds::rtsp::TriggerMethodProperty; }
-  | WFD_PRESENTATION_URL { $$ = wds::rtsp::PresentationURLProperty; }
-  | WFD_CLIENT_RTP_PORTS { $$ = wds::rtsp::ClientRTPPortsProperty; }
-  | WFD_ROUTE { $$ = wds::rtsp::RouteProperty; }
-  | WFD_I2C { $$ = wds::rtsp::I2CProperty; }
-  | WFD_AV_FORMAT_CHANGE_TIMING { $$ = wds::rtsp::AVFormatChangeTimingProperty; }
-  | WFD_PREFERRED_DISPLAY_MODE { $$ = wds::rtsp::PreferredDisplayModeProperty; }
-  | WFD_UIBC_CAPABILITY { $$ = wds::rtsp::UIBCCapabilityProperty; }
-  | WFD_UIBC_SETTING { $$ = wds::rtsp::UIBCSettingPropoerty; }
-  | WFD_STANDBY_RESUME_CAPABILITY { $$ = wds::rtsp::StandbyResumeCapabilityProperty; }
-  | WFD_STANDBY_IN_REQUEST { $$ = wds::rtsp::StandbyProperty; }
-  | WFD_CONNECTOR_TYPE { $$ = wds::rtsp::ConnectorTypeProperty; }
+    WFD_AUDIO_CODECS { $$ = wds::rtsp::AudioCodecsPropertyType; }
+  | WFD_VIDEO_FORMATS { $$ = wds::rtsp::VideoFormatsPropertyType; }
+  | WFD_3D_FORMATS { $$ = wds::rtsp::Video3DFormatsPropertyType; }
+  | WFD_CONTENT_PROTECTION { $$ = wds::rtsp::ContentProtectionPropertyType; }
+  | WFD_DISPLAY_EDID { $$ = wds::rtsp::DisplayEdidPropertyType; }
+  | WFD_COUPLED_SINK { $$ = wds::rtsp::CoupledSinkPropertyType; }
+  | WFD_TRIGGER_METHOD { $$ = wds::rtsp::TriggerMethodPropertyType; }
+  | WFD_PRESENTATION_URL { $$ = wds::rtsp::PresentationURLPropertyType; }
+  | WFD_CLIENT_RTP_PORTS { $$ = wds::rtsp::ClientRTPPortsPropertyType; }
+  | WFD_ROUTE { $$ = wds::rtsp::RoutePropertyType; }
+  | WFD_I2C { $$ = wds::rtsp::I2CPropertyType; }
+  | WFD_AV_FORMAT_CHANGE_TIMING { $$ = wds::rtsp::AVFormatChangeTimingPropertyType; }
+  | WFD_PREFERRED_DISPLAY_MODE { $$ = wds::rtsp::PreferredDisplayModePropertyType; }
+  | WFD_UIBC_CAPABILITY { $$ = wds::rtsp::UIBCCapabilityPropertyType; }
+  | WFD_UIBC_SETTING { $$ = wds::rtsp::UIBCSettingPropertyType; }
+  | WFD_STANDBY_RESUME_CAPABILITY { $$ = wds::rtsp::StandbyResumeCapabilityPropertyType; }
+  | WFD_STANDBY_IN_REQUEST { $$ = wds::rtsp::StandbyPropertyType; }
+  | WFD_CONNECTOR_TYPE { $$ = wds::rtsp::ConnectorTypePropertyType; }
   ;
 
 wfd_error_list:
@@ -598,75 +598,75 @@ wfd_error_list:
 
 wfd_property_errors:
     WFD_AUDIO_CODECS_ERROR ':' WFD_SP wfd_error_list {
-      $$ = new wds::rtsp::PropertyErrors(wds::rtsp::AudioCodecsProperty, *$4);
+      $$ = new wds::rtsp::PropertyErrors(wds::rtsp::AudioCodecsPropertyType, *$4);
       DELETE_TOKEN($4);
     }
   | WFD_VIDEO_FORMATS_ERROR ':' WFD_SP wfd_error_list {
-      $$ = new wds::rtsp::PropertyErrors(wds::rtsp::VideoFormatsProperty, *$4);
+      $$ = new wds::rtsp::PropertyErrors(wds::rtsp::VideoFormatsPropertyType, *$4);
       DELETE_TOKEN($4);
     }
   | WFD_3D_FORMATS_ERROR ':' WFD_SP wfd_error_list {
-      $$ = new wds::rtsp::PropertyErrors(wds::rtsp::Video3DFormatsProperty, *$4);
+      $$ = new wds::rtsp::PropertyErrors(wds::rtsp::Video3DFormatsPropertyType, *$4);
       DELETE_TOKEN($4);
     }
   | WFD_CONTENT_PROTECTION_ERROR ':' WFD_SP wfd_error_list {
-      $$ = new wds::rtsp::PropertyErrors(wds::rtsp::ContentProtectionProperty, *$4);
+      $$ = new wds::rtsp::PropertyErrors(wds::rtsp::ContentProtectionPropertyType, *$4);
       DELETE_TOKEN($4);
     }
   | WFD_DISPLAY_EDID_ERROR ':' WFD_SP wfd_error_list {
-      $$ = new wds::rtsp::PropertyErrors(wds::rtsp::DisplayEdidProperty, *$4);
+      $$ = new wds::rtsp::PropertyErrors(wds::rtsp::DisplayEdidPropertyType, *$4);
       DELETE_TOKEN($4);
     }
   | WFD_COUPLED_SINK_ERROR ':' WFD_SP wfd_error_list {
-      $$ = new wds::rtsp::PropertyErrors(wds::rtsp::CoupledSinkProperty, *$4);
+      $$ = new wds::rtsp::PropertyErrors(wds::rtsp::CoupledSinkPropertyType, *$4);
       DELETE_TOKEN($4);
     }
   | WFD_TRIGGER_METHOD_ERROR ':' WFD_SP wfd_error_list {
-      $$ = new wds::rtsp::PropertyErrors(wds::rtsp::TriggerMethodProperty, *$4);
+      $$ = new wds::rtsp::PropertyErrors(wds::rtsp::TriggerMethodPropertyType, *$4);
       DELETE_TOKEN($4);
     }
   | WFD_PRESENTATION_URL_ERROR ':' WFD_SP wfd_error_list {
-      $$ = new wds::rtsp::PropertyErrors(wds::rtsp::PresentationURLProperty, *$4);
+      $$ = new wds::rtsp::PropertyErrors(wds::rtsp::PresentationURLPropertyType, *$4);
       DELETE_TOKEN($4);
     }
   | WFD_CLIENT_RTP_PORTS_ERROR ':' WFD_SP wfd_error_list {
-      $$ = new wds::rtsp::PropertyErrors(wds::rtsp::ClientRTPPortsProperty, *$4);
+      $$ = new wds::rtsp::PropertyErrors(wds::rtsp::ClientRTPPortsPropertyType, *$4);
       DELETE_TOKEN($4);
     }
   | WFD_ROUTE_ERROR ':' WFD_SP wfd_error_list {
-      $$ = new wds::rtsp::PropertyErrors(wds::rtsp::RouteProperty, *$4);
+      $$ = new wds::rtsp::PropertyErrors(wds::rtsp::RoutePropertyType, *$4);
       DELETE_TOKEN($4);
     }
   | WFD_I2C_ERROR ':' WFD_SP wfd_error_list {
-      $$ = new wds::rtsp::PropertyErrors(wds::rtsp::I2CProperty, *$4);
+      $$ = new wds::rtsp::PropertyErrors(wds::rtsp::I2CPropertyType, *$4);
       DELETE_TOKEN($4);
     }
   | WFD_AV_FORMAT_CHANGE_TIMING_ERROR ':' WFD_SP wfd_error_list {
-      $$ = new wds::rtsp::PropertyErrors(wds::rtsp::AVFormatChangeTimingProperty, *$4);
+      $$ = new wds::rtsp::PropertyErrors(wds::rtsp::AVFormatChangeTimingPropertyType, *$4);
       DELETE_TOKEN($4);
     }
   | WFD_PREFERRED_DISPLAY_MODE_ERROR ':' WFD_SP wfd_error_list {
-      $$ = new PropertyErrors(wds::rtsp::PreferredDisplayModeProperty, *$4);
+      $$ = new PropertyErrors(wds::rtsp::PreferredDisplayModePropertyType, *$4);
       DELETE_TOKEN($4);
     }
   | WFD_UIBC_CAPABILITY_ERROR ':' WFD_SP wfd_error_list {
-      $$ = new wds::rtsp::PropertyErrors(wds::rtsp::UIBCCapabilityProperty, *$4);
+      $$ = new wds::rtsp::PropertyErrors(wds::rtsp::UIBCCapabilityPropertyType, *$4);
       DELETE_TOKEN($4);
     }
   | WFD_UIBC_SETTING_ERROR ':' WFD_SP wfd_error_list {
-      $$ = new wds::rtsp::PropertyErrors(wds::rtsp::UIBCSettingPropoerty, *$4);
+      $$ = new wds::rtsp::PropertyErrors(wds::rtsp::UIBCSettingPropertyType, *$4);
       DELETE_TOKEN($4);
     }
   | WFD_STANDBY_RESUME_CAPABILITY_ERROR ':' WFD_SP wfd_error_list {
-      $$ = new wds::rtsp::PropertyErrors(wds::rtsp::StandbyResumeCapabilityProperty, *$4);
+      $$ = new wds::rtsp::PropertyErrors(wds::rtsp::StandbyResumeCapabilityPropertyType, *$4);
       DELETE_TOKEN($4);
     }
   | WFD_CONNECTOR_TYPE_ERROR ':' WFD_SP wfd_error_list {
-      $$ = new wds::rtsp::PropertyErrors(wds::rtsp::ConnectorTypeProperty, *$4);
+      $$ = new wds::rtsp::PropertyErrors(wds::rtsp::ConnectorTypePropertyType, *$4);
       DELETE_TOKEN($4);
     }
   | WFD_IDR_REQUEST_ERROR ':' WFD_SP wfd_error_list {
-      $$ = new wds::rtsp::PropertyErrors(wds::rtsp::IDRRequestProperty, *$4);
+      $$ = new wds::rtsp::PropertyErrors(wds::rtsp::IDRRequestPropertyType, *$4);
       DELETE_TOKEN($4);
     }
   | WFD_GENERIC_PROPERTY_ERROR ':' WFD_SP wfd_error_list {

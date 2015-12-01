@@ -34,7 +34,7 @@ PropertyErrors::PropertyErrors(PropertyType type, std::vector<unsigned short> er
 }
 
 PropertyErrors::PropertyErrors(const std::string& generic_property_name, std::vector<unsigned short> error_codes) :
-     type_(WFD_GENERIC),
+     type_(GenericPropertyType),
      generic_property_name_(generic_property_name),
      error_codes_(error_codes) {
          
@@ -46,7 +46,7 @@ PropertyErrors::~PropertyErrors() {
 std::string PropertyErrors::ToString() const {
   std::string ret;
 
-  if (type_ == WFD_GENERIC)
+  if (type_ == GenericPropertyType)
     ret += generic_property_name_;
   else
     ret += PropertyName::name[type_];
