@@ -54,7 +54,7 @@ std::shared_ptr<Property> Payload::get_property(std::string name) const
 
 std::shared_ptr<Property> Payload::get_property(PropertyType type) const
 {
-  if (type == WFD_GENERIC)
+  if (type == GenericPropertyType)
     return nullptr;
 
   return get_property(PropertyName::name[type]);
@@ -65,7 +65,7 @@ bool Payload::has_property(PropertyType type) const {
 }
 
 void Payload::add_property(const std::shared_ptr<Property>& property) {
-  if (property->type() == WFD_GENERIC) {
+  if (property->type() == GenericPropertyType) {
     auto gen_prop = std::static_pointer_cast<GenericProperty>(property);
     properties_[gen_prop->key()] = property;
   } else {
@@ -87,14 +87,14 @@ std::shared_ptr<PropertyErrors> Payload::get_property_error(std::string name) co
 
 std::shared_ptr<PropertyErrors> Payload::get_property_error(PropertyType type) const
 {
-  if (type == WFD_GENERIC)
+  if (type == GenericPropertyType)
     return nullptr;
 
   return get_property_error(PropertyName::name[type]);
 }
 
 void Payload::add_property_error(const std::shared_ptr<PropertyErrors>& errors) {
-  if (errors->type() == WFD_GENERIC) {
+  if (errors->type() == GenericPropertyType) {
     property_errors_[errors->generic_property_name()] = errors;
   } else {
     property_errors_[PropertyName::name[errors->type()]] = errors;
