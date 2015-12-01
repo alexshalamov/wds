@@ -1,3 +1,4 @@
+%option full
 %option nodefault nounput nomain
 %option bison-bridge reentrant noyywrap
 %option never-interactive

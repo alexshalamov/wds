@@ -34,7 +34,7 @@
    }
 }
 
-%lex-param {void* scanner}
+%lex-param {void* scanner} { std::unique_ptr<wds::rtsp::Message>& message }
 %parse-param {void* scanner} { std::unique_ptr<wds::rtsp::Message>& message }
 
 %code {

@@ -29,6 +29,11 @@
 #include "message.h"
 #include "payload.h"
 
+
+int wfd_lex(YYSTYPE* yylval, void* scanner, std::unique_ptr<wds::rtsp::Message>& message);
+
+void wfd_error (void* scanner, std::unique_ptr<wds::rtsp::Message>& message, const char* error_message);
+
 namespace wds {
 namespace rtsp {
 

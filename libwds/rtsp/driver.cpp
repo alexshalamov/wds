@@ -37,11 +37,20 @@
 #include "gen/headerscanner.h"
 #include "gen/messagescanner.h"
 
+
+int wfd_lex(YYSTYPE* yylval, void* scanner, std::unique_ptr<wds::rtsp::Message>& message) {
+  return 0;
+}
+
+void wfd_error (void* scanner, std::unique_ptr<wds::rtsp::Message>& message, const char* error_message) {
+}
+
 namespace wds {
 namespace rtsp {
 
 Driver::~Driver() {
 }
+
 
 void Driver::Parse(const std::string& input, std::unique_ptr<Message>& message) {
 
