@@ -31,6 +31,7 @@
 #include "libwds/public/wds_export.h"
 #include "libwds/rtsp/getparameter.h"
 #include "libwds/rtsp/setparameter.h"
+#include "libwds/rtsp/triggermethod.h"
 #include "libwds/public/media_manager.h"
 
 namespace wds {
