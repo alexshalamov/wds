@@ -27,11 +27,9 @@
 #include <cctype>
 #include <sstream>
 
-#include "gen/parser.h"
 #include "gen/messagescanner.h"
 #include "gen/errorscanner.h"
 #include "gen/headerscanner.h"
-
 
 int wds_lex(YYSTYPE* yylval, void* scanner, std::unique_ptr<wds::rtsp::Message>& message) {
   if (!message) {
@@ -71,8 +69,11 @@ void Driver::Parse(const std::string& input, std::unique_ptr<Message>& message) 
 
   void* scanner;
 
+  wds_debug = 1;
+
   if (!message) {
     header_lex_init(&scanner);
+    header_set_debug(1, scanner);
     header__scan_string(input.c_str(), scanner);
     wds_parse(scanner, message);
     header_lex_destroy(scanner);
@@ -80,11 +81,13 @@ void Driver::Parse(const std::string& input, std::unique_ptr<Message>& message) 
     Reply* reply = static_cast<Reply*>(message.get());
     if (reply->response_code() == STATUS_SeeOther) {
       error_lex_init(&scanner);
+      error_set_debug(1, scanner);
       error__scan_string(input.c_str(), scanner);
       wds_parse(scanner, message);
       error_lex_destroy(scanner);
     } else {
       message_lex_init(&scanner);
+      message_set_debug(1, scanner);
       message_set_extra (message->is_reply(), scanner);
       message__scan_string(input.c_str(), scanner);
       wds_parse(scanner, message);

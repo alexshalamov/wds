@@ -1,3 +1,5 @@
+%debug
+%verbose
 %pure-parser
 %error-verbose
 %no-lines
