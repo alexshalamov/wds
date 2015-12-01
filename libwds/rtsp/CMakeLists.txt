@@ -36,8 +36,8 @@ add_library(wdsrtsp OBJECT
     preferreddisplaymode.cpp uibccapability.cpp propertyerrors.cpp
 )
 
-#add_executable(test-wds tests.cpp $<TARGET_OBJECTS:wdsrtsp> $<TARGET_OBJECTS:wdscommon>)
+add_executable(test-wds tests.cpp $<TARGET_OBJECTS:wdsrtsp> $<TARGET_OBJECTS:wdscommon>)
 set(LINK_FLAGS ${LINK_FLAGS} "-Wl,-whole-archive")
-#target_link_libraries (test-wds)
+target_link_libraries (test-wds)
 
-#add_test(WfdTest test-wds)
+add_test(WfdTest test-wds)
