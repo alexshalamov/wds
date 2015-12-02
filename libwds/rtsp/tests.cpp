@@ -86,7 +86,7 @@ static bool property_type_exists (std::vector<std::string> properties,
 {
   return std::find (properties.begin(),
                     properties.end(),
-                    wds::rtsp::PropertyName::name[type]) != properties.end();
+                    wds::rtsp::GetPropertyName(type)) != properties.end();
 }
 
 static bool test_audio_codec (wds::AudioCodec codec, wds::AudioFormats format,

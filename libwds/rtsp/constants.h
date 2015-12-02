@@ -58,7 +58,7 @@ enum PropertyType {
 namespace PropertyName {
   const char wfd_audio_codecs[] = "wfd_audio_codecs";
   const char wfd_video_formats[] = "wfd_video_formats";
-  const char wfd_3d_formats[] = "wfd_3d_video_formats";
+  const char wfd_3d_video_formats[] = "wfd_3d_video_formats";
   const char wfd_content_protection[] = "wfd_content_protection";
   const char wfd_display_edid[] = "wfd_display_edid";
   const char wfd_coupled_sink[] = "wfd_coupled_sink";
@@ -76,29 +76,29 @@ namespace PropertyName {
   const char wfd_connector_type[] = "wfd_connector_type";
   const char wfd_idr_request[] = "wfd_idr_request";
 
-  const char* const name[] =
-    {
-      wfd_audio_codecs,
-      wfd_video_formats,
-      wfd_3d_formats,
-      wfd_content_protection,
-      wfd_display_edid,
-      wfd_coupled_sink,
-      wfd_trigger_method,
-      wfd_presentation_url,
-      wfd_client_rtp_ports,
-      wfd_route,
-      wfd_I2C,
-      wfd_av_format_change_timing,
-      wfd_preferred_display_mode,
-      wfd_uibc_capability,
-      wfd_uibc_setting,
-      wfd_standby_resume_capability,
-      wfd_standby,
-      wfd_connector_type,
-      wfd_idr_request
-    };
-}
+//  const char* const name[] =
+//    {
+//      wfd_audio_codecs,
+//      wfd_video_formats,
+//      wfd_3d_formats,
+//      wfd_content_protection,
+//      wfd_display_edid,
+//      wfd_coupled_sink,
+//      wfd_trigger_method,
+//      wfd_presentation_url,
+//      wfd_client_rtp_ports,
+//      wfd_route,
+//      wfd_I2C,
+//      wfd_av_format_change_timing,
+//      wfd_preferred_display_mode,
+//      wfd_uibc_capability,
+//      wfd_uibc_setting,
+//      wfd_standby_resume_capability,
+//      wfd_standby,
+//      wfd_connector_type,
+//      wfd_idr_request
+//    };
+}  // namespace PropertyName
 
 enum Method {
   OPTIONS,

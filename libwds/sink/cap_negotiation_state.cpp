@@ -63,7 +63,7 @@ std::unique_ptr<Reply> M3Handler::HandleMessage(Message* message) {
   auto props = message->payload().get_parameter_properties();
   for (auto it = props.begin(); it != props.end(); ++it) {
       std::shared_ptr<rtsp::Property> new_prop;
-      if (*it == PropertyName::name[rtsp::AudioCodecsPropertyType]){
+      if (*it == GetPropertyName(rtsp::AudioCodecsPropertyType)){
           // FIXME: declare that we support absolutely every audio codec/format,
           // but there should be a MediaManager API for it
           auto codec_lpcm = AudioCodec(LPCM, AudioModes(3), 0);
@@ -75,37 +75,37 @@ std::unique_ptr<Reply> M3Handler::HandleMessage(Message* message) {
           codec_list.push_back(codec_ac3);
           new_prop.reset(new rtsp::AudioCodecs(codec_list));
           reply->payload().add_property(new_prop);
-      } else if (*it == PropertyName::name[rtsp::VideoFormatsPropertyType]){
+      } else if (*it == GetPropertyName(rtsp::VideoFormatsPropertyType)){
           new_prop.reset(new rtsp::VideoFormats(ToSinkMediaManager(manager_)->GetNativeVideoFormat(),
               false,
               ToSinkMediaManager(manager_)->GetSupportedH264VideoCodecs()));
           reply->payload().add_property(new_prop);
-      } else if (*it == PropertyName::name[rtsp::Video3DFormatsPropertyType]){
+      } else if (*it == GetPropertyName(rtsp::Video3DFormatsPropertyType)){
           new_prop.reset(new Formats3d());
           reply->payload().add_property(new_prop);
-      } else if (*it == PropertyName::name[rtsp::ContentProtectionPropertyType]){
+      } else if (*it == GetPropertyName(rtsp::ContentProtectionPropertyType)){
           new_prop.reset(new ContentProtection());
           reply->payload().add_property(new_prop);
-      } else if (*it == PropertyName::name[rtsp::DisplayEdidPropertyType]){
+      } else if (*it == GetPropertyName(rtsp::DisplayEdidPropertyType)){
           new_prop.reset(new DisplayEdid());
           reply->payload().add_property(new_prop);
-      } else if (*it == PropertyName::name[rtsp::CoupledSinkPropertyType]){
+      } else if (*it == GetPropertyName(rtsp::CoupledSinkPropertyType)){
           new_prop.reset(new CoupledSink());
           reply->payload().add_property(new_prop);
-      } else if (*it == PropertyName::name[rtsp::ClientRTPPortsPropertyType]){
+      } else if (*it == GetPropertyName(rtsp::ClientRTPPortsPropertyType)){
           new_prop.reset(new ClientRtpPorts(ToSinkMediaManager(manager_)->GetLocalRtpPorts().first,
                                             ToSinkMediaManager(manager_)->GetLocalRtpPorts().second));
           reply->payload().add_property(new_prop);
-      } else if (*it == PropertyName::name[rtsp::I2CPropertyType]){
+      } else if (*it == GetPropertyName(rtsp::I2CPropertyType)){
           new_prop.reset(new I2C(0));
           reply->payload().add_property(new_prop);
-      } else if (*it == PropertyName::name[rtsp::UIBCCapabilityPropertyType]){
+      } else if (*it == GetPropertyName(rtsp::UIBCCapabilityPropertyType)){
           new_prop.reset(new UIBCCapability());
           reply->payload().add_property(new_prop);
-      } else if (*it == PropertyName::name[rtsp::ConnectorTypePropertyType]){
+      } else if (*it == GetPropertyName(rtsp::ConnectorTypePropertyType)){
           new_prop.reset(new rtsp::ConnectorType(ToSinkMediaManager(manager_)->GetConnectorType()));
           reply->payload().add_property(new_prop);
-      } else if (*it == PropertyName::name[rtsp::StandbyResumeCapabilityPropertyType]){
+      } else if (*it == GetPropertyName(rtsp::StandbyResumeCapabilityPropertyType)){
           new_prop.reset(new StandbyResumeCapability(false));
           reply->payload().add_property(new_prop);
       } else {
