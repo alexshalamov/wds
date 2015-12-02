@@ -82,7 +82,7 @@ std::string H264Codec3d::ToString() const {
 std::string Formats3d::ToString() const {
   std::string ret;
 
-  ret = PropertyName::wfd_3d_formats
+  ret = PropertyName::wfd_3d_video_formats
       + std::string(SEMICOLON)+ std::string(SPACE);
 
   if (is_none())

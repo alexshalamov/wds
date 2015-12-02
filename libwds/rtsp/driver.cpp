@@ -37,15 +37,15 @@ int wds_lex(YYSTYPE* yylval, void* scanner, std::unique_ptr<wds::rtsp::Message>&
   } else if (message->is_reply()) {
     wds::rtsp::Reply* reply = static_cast<wds::rtsp::Reply*>(message.get());
     if (reply->response_code() == wds::rtsp::STATUS_SeeOther)
-      return  error_lex(yylval, scanner);
-    else
-      return  message_lex(yylval, scanner);
+      return error_lex(yylval, scanner);
+
+    return message_lex(yylval, scanner);
   }
 
-  return 0;
+  return message_lex(yylval, scanner);//0;
 }
 
-void wds_error (void* scanner, std::unique_ptr<wds::rtsp::Message>& message, const char* error_message) {
+void wds_error(void* scanner, std::unique_ptr<wds::rtsp::Message>& message, const char* error_message) {
 }
 
 namespace wds {
@@ -67,13 +67,13 @@ void Driver::Parse(const std::string& input, std::unique_ptr<Message>& message) 
   // *_scan_string(...) should be used to set input buffer for lexer
 
 
-  void* scanner;
+  void* scanner = nullptr;
 
-  wds_debug = 1;
+  //wds_debug = 1;
 
   if (!message) {
     header_lex_init(&scanner);
-    header_set_debug(1, scanner);
+//    header_set_debug(1, scanner);
     header__scan_string(input.c_str(), scanner);
     wds_parse(scanner, message);
     header_lex_destroy(scanner);
@@ -81,18 +81,25 @@ void Driver::Parse(const std::string& input, std::unique_ptr<Message>& message) 
     Reply* reply = static_cast<Reply*>(message.get());
     if (reply->response_code() == STATUS_SeeOther) {
       error_lex_init(&scanner);
-      error_set_debug(1, scanner);
+//      error_set_debug(1, scanner);
       error__scan_string(input.c_str(), scanner);
       wds_parse(scanner, message);
       error_lex_destroy(scanner);
     } else {
       message_lex_init(&scanner);
-      message_set_debug(1, scanner);
+//      message_set_debug(1, scanner);
       message_set_extra (message->is_reply(), scanner);
       message__scan_string(input.c_str(), scanner);
       wds_parse(scanner, message);
       message_lex_destroy(scanner);
     }
+  } else {
+      message_lex_init(&scanner);
+//      message_set_debug(1, scanner);
+      message_set_extra (message->is_reply(), scanner);
+      message__scan_string(input.c_str(), scanner);
+      wds_parse(scanner, message);
+      message_lex_destroy(scanner);
   }
 }
 
