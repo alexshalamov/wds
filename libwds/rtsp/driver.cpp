@@ -19,7 +19,6 @@
  * 02110-1301 USA
  */
 
-
 #include "driver.h"
 #include "message.h"
 #include "reply.h"
@@ -31,7 +30,8 @@
 #include "gen/errorscanner.h"
 #include "gen/headerscanner.h"
 
-int wds_lex(YYSTYPE* yylval, void* scanner, std::unique_ptr<wds::rtsp::Message>& message) {
+int wds_lex(YYSTYPE* yylval, void* scanner,
+    std::unique_ptr<wds::rtsp::Message>& message) {
   if (!message) {
     return header_lex(yylval, scanner);
   } else if (message->is_reply()) {
@@ -42,38 +42,29 @@ int wds_lex(YYSTYPE* yylval, void* scanner, std::unique_ptr<wds::rtsp::Message>&
     return message_lex(yylval, scanner);
   }
 
-  return message_lex(yylval, scanner);//0;
+  return message_lex(yylval, scanner);
 }
 
-void wds_error(void* scanner, std::unique_ptr<wds::rtsp::Message>& message, const char* error_message) {
+void wds_error(void* scanner, std::unique_ptr<wds::rtsp::Message>& message,
+    const char* error_message) {
+  message.reset(nullptr);
 }
 
 namespace wds {
 namespace rtsp {
 
-Driver::~Driver() {
-}
-
-void Driver::Parse(const std::string& input, std::unique_ptr<Message>& message) {
-  // we can remove all these ifs by providing state to lexers
-  // e.g. wfd_lex_init(&scanner);
-  // state = header, error, message
-  // then in .l file we need to add #define YY_EXTRA_TYPE struct _state *
-  //
-  // then code would look like
-  // wfd_lex_init(&scanner);
-  // wfd_lex_set_extra(state, scanner);
-  // in .l file we can check yyextra, if (yyextra == error) return error token.
-  // *_scan_string(...) should be used to set input buffer for lexer
-
-
+void Driver::Parse(const std::string& input,std::unique_ptr<Message>& message) {
   void* scanner = nullptr;
 
-  //wds_debug = 1;
+  bool enable_debug = false;
+#if YYDEBUG
+  enable_debug = true;
+  wds_debug = 1;
+#endif
 
   if (!message) {
     header_lex_init(&scanner);
-//    header_set_debug(1, scanner);
+    header_set_debug(enable_debug, scanner);
     header__scan_string(input.c_str(), scanner);
     wds_parse(scanner, message);
     header_lex_destroy(scanner);
@@ -81,13 +72,13 @@ void Driver::Parse(const std::string& input, std::unique_ptr<Message>& message) 
     Reply* reply = static_cast<Reply*>(message.get());
     if (reply->response_code() == STATUS_SeeOther) {
       error_lex_init(&scanner);
-//      error_set_debug(1, scanner);
+      error_set_debug(enable_debug, scanner);
       error__scan_string(input.c_str(), scanner);
       wds_parse(scanner, message);
       error_lex_destroy(scanner);
     } else {
       message_lex_init(&scanner);
-//      message_set_debug(1, scanner);
+      message_set_debug(enable_debug, scanner);
       message_set_extra (message->is_reply(), scanner);
       message__scan_string(input.c_str(), scanner);
       wds_parse(scanner, message);
@@ -95,8 +86,7 @@ void Driver::Parse(const std::string& input, std::unique_ptr<Message>& message) 
     }
   } else {
       message_lex_init(&scanner);
-//      message_set_debug(1, scanner);
-      message_set_extra (message->is_reply(), scanner);
+      message_set_debug(enable_debug, scanner);
       message__scan_string(input.c_str(), scanner);
       wds_parse(scanner, message);
       message_lex_destroy(scanner);

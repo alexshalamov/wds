@@ -1,7 +1,4 @@
-%debug
-%verbose
 %pure-parser
-%error-verbose
 %no-lines
 %output "gen/parser.cpp"
 %defines "gen/parser.h"

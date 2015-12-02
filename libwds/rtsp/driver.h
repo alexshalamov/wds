@@ -32,7 +32,6 @@
 #include "gen/parser.h"
 
 int wds_lex(YYSTYPE* yylval, void* scanner, std::unique_ptr<wds::rtsp::Message>& message);
-
 void wds_error (void* scanner, std::unique_ptr<wds::rtsp::Message>& message, const char* error_message);
 
 namespace wds {
@@ -41,11 +40,9 @@ namespace rtsp {
 class Driver {
  public:
   Driver() = default;
-  ~Driver();
+  ~Driver() = default;
 
   void Parse(const std::string& input, std::unique_ptr<Message>& message /*out*/);
-
- private:
 };
 
 }  // namespace rtsp

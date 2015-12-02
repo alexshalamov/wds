@@ -1,9 +1,8 @@
-%option debug
 %option nodefault nounput nomain
 %option bison-bridge reentrant noyywrap
 %option never-interactive
 %option warn stack noyy_top_state noyy_pop_state noyy_push_state
-%option case-insensitive verbose
+%option case-insensitive
 %option outfile="gen/errorscanner.cpp" header-file="gen/errorscanner.h"
 
 %{
